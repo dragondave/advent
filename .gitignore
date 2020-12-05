@@ -1,0 +1,4 @@
+secrets.py
+cache.sqlite
+.*
+__*
