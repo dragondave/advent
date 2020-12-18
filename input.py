@@ -1,7 +1,7 @@
 import requests
 import requests_cache
 import numpy as np
-from secrets import COOKIE
+import secrets
 requests_cache.install_cache()
 COOKIE = {'session': secrets.COOKIE}
 URL = "https://adventofcode.com/{year}/day/{day}/input"
@@ -18,10 +18,12 @@ def input(day, year=2020):
 def input_int(day, year=2020):
     return [int(x) for x in input(day, year)]
 
-def input_grid(day, year=2020):
+def input_grid(day, year=2020, symbols=None):
+    if symbols is None:
+        symbols = '.#'
     data = input_raw(day, year).strip().split('\n')
     trees = np.array([list(x) for x in data])
-    trees[trees=='.'] = 0
-    trees[trees=='#'] = 1
+    for i, symbol in enumerate(symbols):
+        trees[trees==symbol] = i
     trees = np.array(trees, dtype=int)
     return trees
